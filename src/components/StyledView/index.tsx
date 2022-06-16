@@ -1,14 +1,13 @@
-import React from "react";
 import styled from "styled-components/native";
 import { FlexStyle, FlexAlignType } from "react-native";
 
-import { marginMixin, MarginMixin } from "./mixins/margin";
-import { paddingMixin, PaddingMixin } from "./mixins/padding";
-import { getCssValue } from "./utils";
-import { positionedMixin, PositionedMixin } from "./mixins/positioned";
-import { FlexMixin, flexMixin } from "./mixins/flex";
+import { marginMixin, MarginMixin } from "../mixins/margin";
+import { paddingMixin, PaddingMixin } from "../mixins/padding";
+import { getCssValue } from "../../utils/utils";
+import { positionedMixin, PositionedMixin } from "../mixins/positioned";
+import { FlexMixin, flexMixin } from "../mixins/flex";
 
-export type ContainerProps = Partial<
+export type StyledViewProps = Partial<
   {
     bgColor: string;
 
@@ -21,13 +20,17 @@ export type ContainerProps = Partial<
     width: number | string;
 
     self: string;
-    items: FlexAlignType;
-    justify: FlexStyle["justifyContent"];
+    alignItems: FlexAlignType;
+    justifyContent: FlexStyle["justifyContent"];
 
     borderRadius: number | string;
     zIndex: number;
     opacity: number;
     borderWidth: number;
+    borderBottomLeftRadius: number;
+    borderBottomRightRadius: number;
+    borderTopRightRadius: number;
+    borderTopLeftRadius: number;
     borderColor: string;
     aspectRatio: number;
   } & MarginMixin &
@@ -36,7 +39,7 @@ export type ContainerProps = Partial<
     FlexMixin
 >;
 
-export const Container = styled.View<ContainerProps>`
+export const StyledView = styled.View<StyledViewProps>`
   ${marginMixin}
   ${paddingMixin}
   ${positionedMixin}
@@ -53,8 +56,9 @@ export const Container = styled.View<ContainerProps>`
   ${({ minHeight }) => minHeight && `min-height: ${getCssValue(minHeight)}`};
 
   ${({ self }) => self && `align-self: ${self}`};
-  ${({ items }) => items && `align-items: ${items}`};
-  ${({ justify }) => justify && `justify-content: ${justify}`};
+  ${({ alignItems }) => alignItems && `align-items: ${alignItems}`};
+  ${({ justifyContent }) =>
+    justifyContent && `justify-content: ${justifyContent}`};
 
   ${({ borderRadius }) =>
     borderRadius && `border-radius: ${getCssValue(borderRadius)}`};

@@ -1,5 +1,5 @@
 import { css } from 'styled-components/native';
-import { getCssValue } from '../utils';
+import { getCssValue } from '../../utils/utils';
 
 export interface MarginMixin {
   m: number | string;

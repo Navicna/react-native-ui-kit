@@ -1,10 +1,10 @@
 import styled from "styled-components/native";
 import { ImageProps } from "react-native";
 
-import { marginMixin, MarginMixin } from "./mixins/margin";
-import { paddingMixin, PaddingMixin } from "./mixins/padding";
-import { positionedMixin, PositionedMixin } from "./mixins/positioned";
-import { getCssValue } from "./utils";
+import { marginMixin, MarginMixin } from "../mixins/margin";
+import { paddingMixin, PaddingMixin } from "../mixins/padding";
+import { positionedMixin, PositionedMixin } from "../mixins/positioned";
+import { getCssValue } from "../../utils/utils";
 
 export type StyledImageProps = Partial<
   {

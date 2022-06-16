@@ -2,45 +2,36 @@ import React from "react";
 
 import styled from "styled-components/native";
 
-import { moderateScale } from "./metrics";
-import { marginMixin, MarginMixin } from "./mixins/margin";
-import { paddingMixin, PaddingMixin } from "./mixins/padding";
+import { moderateScale } from "../../utils/metrics";
+import { marginMixin, MarginMixin } from "../mixins/margin";
+import { paddingMixin, PaddingMixin } from "../mixins/padding";
 
-export type TextProps = Partial<
+export type StyledTextProps = Partial<
   {
-    size?: number;
+    fontSize?: number;
     color?: string;
     letterSpacing?: number;
     lineHeight?: number;
-    align?: "auto" | "left" | "right" | "center" | "justify";
-    weight?: "SemiBold" | "Bold" | "Light" | "Regular";
+    textAlign?: "auto" | "left" | "right" | "center" | "justify";
   } & MarginMixin &
     PaddingMixin
 >;
 
-export const Text = styled.Text<TextProps>`
+export const StyledText = styled.Text<StyledTextProps>`
   ${marginMixin}
   ${paddingMixin}
-  font-size: ${({ size }) => moderateScale(size || 14)};
+  font-size: ${({ fontSize }) => moderateScale(fontSize || 14)};
   color: ${({ color }) => color || "black"};
   letter-spacing: ${({ letterSpacing }) => moderateScale(letterSpacing || 0)};
 
   ${({ lineHeight }) =>
     lineHeight && `line-height: ${moderateScale(lineHeight || 0)}`};
-  ${({ align }) => align && `text-align: ${align}`};
-
-  font-family: ${({ weight }) => {
-    const fontWeight = weight ? weight : undefined;
-    return fontWeight;
-  }};
+  ${({ textAlign }) => textAlign && `text-align: ${textAlign}`};
 `;
 
 type boldTextArray = Array<{ match?: boolean; text: string }>;
 
 function parseDescription(descriptionBody: string): boldTextArray {
-  //    input: 'buy **something**'
-  //    output: [{ text: 'buy' }, { text: 'something', highlight: true }]
-
   const regex = /\*\*/g;
   const output: boldTextArray = [];
 
@@ -79,30 +70,29 @@ function parseDescription(descriptionBody: string): boldTextArray {
 }
 
 export const TextWithSepOperator: React.FC<
-  TextProps & {
+  StyledTextProps & {
     transformTo?: "SemiBold" | "Bold" | "Light";
-    matchedTextProps?: TextProps;
+    matchedTextProps?: StyledTextProps;
     children?: JSX.Element;
   }
 > = ({ children, matchedTextProps, transformTo, ...props }) => {
   if (typeof children !== "string") {
-    return <Text {...props}>{children}</Text>;
+    return <StyledText {...props}>{children}</StyledText>;
   }
 
   const textArray = parseDescription(children);
 
   return (
-    <Text {...props}>
+    <StyledText {...props}>
       {textArray.map(({ text, match }, index) => {
         const passProps = { ...props, ...(match ? matchedTextProps : {}) };
-        const weight = match ? transformTo || "Bold" : "Regular";
 
         return (
-          <Text {...passProps} weight={weight} key={index}>
+          <StyledText {...passProps} key={index}>
             {text}
-          </Text>
+          </StyledText>
         );
       })}
-    </Text>
+    </StyledText>
   );
 };
