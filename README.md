@@ -4,9 +4,9 @@ Ui kit for react-native developers
 
 ## Tools
 
-- React-Native
-- React
-- Styled Components
+- NPM: https://www.npmjs.com/package/react-native-dev-ui
+- React-Native: https://reactnative.dev/
+- Styled Components: https://styled-components.com/
 
 ## Usage
 
